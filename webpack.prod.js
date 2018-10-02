@@ -21,7 +21,7 @@ module.exports = {
   entry: {
     main: './src/main.ts',
     polyfills: './src/polyfills.ts',
-    styles: './src/styles.css'
+    styles: './src/styles/index.scss'
   },
 
   output: {
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js','scss'],
     alias: rxPaths()
   },
 
@@ -60,6 +60,10 @@ module.exports = {
       {
         test: /\.html$/,
         use: 'raw-loader'
+      },
+      {
+        test: /\.s(a|c)ss$/,
+        use: [ 'to-string-loader', 'css-loader', 'sass-loader' ]
       },
       {
         test: /\.css$/,
