@@ -13,33 +13,33 @@ const { SuppressExtractedTextChunksWebpackPlugin } = require('@angular-devkit/bu
 const { HashedModuleIdsPlugin } = require('webpack');
 
 module.exports = {
-
+  
   mode: 'production',
-
+  
   devtool: 'source-map',
-
+  
   entry: {
     main: './src/main.ts',
     polyfills: './src/polyfills.ts',
-    styles: './src/styles/index.scss'
+    //styles: './src/styles/index.scss'
   },
-
+  
   output: {
     path: resolve('./dist'),
     filename: '[name].js',
   },
-
+  
   resolve: {
     extensions: ['.ts', '.js','scss'],
     alias: rxPaths()
   },
-
+  
   node: false,
-
+  
   performance: {
     hints: false,
   },
-
+  
   module: {
     rules: [
       {
@@ -62,18 +62,13 @@ module.exports = {
         use: 'raw-loader'
       },
       {
-        test: /\.s(a|c)ss$/,
-        use: [ 'to-string-loader', 'css-loader', 'sass-loader' ]
+        test: /\.scss$/,
+        use: ["raw-loader", "sass-loader"]
       },
       {
-        test: /\.css$/,
-        use: ['to-string-loader', 'css-loader'],
-        exclude: [resolve('./src/styles.css')]
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-        include: [resolve('./src/styles.css')]
+        test: /\.scss$/,
+        include: [ resolve('./src/styles/index.scss')],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       },
       {
         test: /\.(eot|svg|cur)$/,
@@ -91,15 +86,13 @@ module.exports = {
           limit: 10000
         }
       },
-
-      // This hides some deprecation warnings that Webpack throws
       {
         test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
         parser: { system: true },
       }
     ]
   },
-
+  
   optimization: {
     noEmitOnErrors: true,
     runtimeChunk: 'single',
@@ -147,7 +140,7 @@ module.exports = {
       })
     ]
   },
-
+  
   plugins: [
     new IndexHtmlWebpackPlugin({
       input: resolve('./src/index.html'),
@@ -158,7 +151,7 @@ module.exports = {
         'main',
       ]
     }),
-
+    
     new AngularCompilerPlugin({
       mainPath: resolve('./src/main.ts'),
       sourceMap: true,
@@ -169,17 +162,17 @@ module.exports = {
         [resolve('src/environments/environment.ts')]: resolve('src/environments/environment.prod.ts')
       }
     }),
-
+    
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-
+    
     new SuppressExtractedTextChunksWebpackPlugin(),
-
+    
     new ProgressPlugin(),
-
+    
     new CircularDependencyPlugin({
       exclude: /[\\\/]node_modules[\\\/]/
     }),
-
+    
     new CopyWebpackPlugin([
       {
         from: 'src/assets',
