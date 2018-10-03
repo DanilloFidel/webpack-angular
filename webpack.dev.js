@@ -15,7 +15,7 @@ module.exports = {
   entry: {
     main: './src/main.ts',
     polyfills: './src/polyfills.ts',
-    styles: './src/styles.css'
+    styles: './src/styles/index.scss'
   },
 
   output: {
