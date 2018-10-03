@@ -3,13 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { PanelComponent } from './panel/panelcomponent';
 
 
 
 @NgModule({
     declarations: [ 
         AppComponent,
-        HeaderComponent
+        HeaderComponent,
+        PanelComponent
     ],
     imports: [ BrowserModule ],
     providers: [],

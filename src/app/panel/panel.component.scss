@@ -1,0 +1,23 @@
+@import '../../styles/index';
+
+.container{
+    background-color: $primary-color;
+    height: calc(100vh - 100px);
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly
+}
+
+.box{
+    height: 50%;
+    width: 48%;
+}
+
+form{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    justify-content: space-around;
+}
