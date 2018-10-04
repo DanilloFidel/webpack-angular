@@ -56,7 +56,9 @@ export class PanelComponent implements OnInit{
         return JSON.parse(tarefa)
     }
 
-    public deletarTarefa(id: number): void{
+    public deletarTarefa(id: any): void{
+        console.log(this.tarefas)
         console.log(id)
+        
     }
 }
