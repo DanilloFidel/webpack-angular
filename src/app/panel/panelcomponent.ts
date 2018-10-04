@@ -44,7 +44,7 @@ export class PanelComponent implements OnInit{
         this.formulario.reset()
     }
 
-    public setTarefa(novaTarefa): void{
+    public setTarefa(novaTarefa: Tarefa[]): void{
         localStorage.setItem("tarefa", JSON.stringify(novaTarefa))
     }
 
