@@ -21,3 +21,20 @@ form{
     padding: 0 10px;
     justify-content: space-around;
 }
+
+ul{
+    list-style: none;
+}
+
+.tarefa{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid $line;
+}
+
+.tarefa:hover{
+    box-shadow: $shadow;
+    border-bottom: none;
+}
