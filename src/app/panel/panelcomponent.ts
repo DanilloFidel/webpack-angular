@@ -13,8 +13,8 @@ export class PanelComponent implements OnInit{
     public titulo: string;
     public descricao: string;
     public prioridade: number;
+    public tarefas: Tarefa[] = [];
 
-    public tarefas: string[];
 
     public formulario: FormGroup = new FormGroup({
         "titulo": new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
@@ -26,9 +26,7 @@ export class PanelComponent implements OnInit{
     constructor(){}
 
     ngOnInit(){
-        let tarefa = [] = localStorage.getItem(JSON.parse("tarefa"))
-        this.tarefas = tarefa;
-        console.log(tarefa.length)
+
     }
 
     ngOnChanges(){
@@ -41,8 +39,17 @@ export class PanelComponent implements OnInit{
             this.formulario.value.descricao,
             this.formulario.value.prioridade,
         )
-        console.log(tarefa)
+        this.tarefas.push(tarefa)
+        this.setTarefa(this.tarefas)
+        this.formulario.reset()
+    }
 
-        
+    public setTarefa(novaTarefa): void{
+        localStorage.setItem("tarefa", JSON.stringify(novaTarefa))
+    }
+
+    public getTarefa(): Array<object>{
+        let tarefa = localStorage.getItem("tarefa")
+         return JSON.parse(tarefa)
     }
 }
