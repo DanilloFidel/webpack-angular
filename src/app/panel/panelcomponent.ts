@@ -55,4 +55,8 @@ export class PanelComponent implements OnInit{
         let tarefa = localStorage.getItem("tarefa")
         return JSON.parse(tarefa)
     }
+
+    public deletarTarefa(id: number): void{
+        console.log(id)
+    }
 }
