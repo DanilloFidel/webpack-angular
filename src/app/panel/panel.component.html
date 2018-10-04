@@ -14,16 +14,23 @@
             <button type="reset">Limpar</button>
         </form>
     </div>
-    <div class="box">
-        <ul>
-            <li>
-                <div class="tarefa" *ngFor="let tarefa of tarefas">
-                    <h4>{{tarefa.titulo}}</h4>
-                    <p>{{tarefa.descricao}}</p>
-                    <input type="checkbox" name="visto">
-                    <i class="fas fa-trash-alt"></i>
-                </div>
-            </li>
-        </ul>
+    <div class="box" *ngIf="tarefas === null; else lista">
+        <div>
+            <h1>Nenhuma tarefa adicionada</h1>
+        </div>
     </div>
+    <ng-template  #lista>
+        <div class="box">
+            <ul>
+                <li>
+                    <div class="tarefa" *ngFor="let tarefa of tarefas" id="{{tarefaId}}">
+                        <h4>{{tarefa.titulo}}</h4>
+                        <p>{{tarefa.descricao}}</p>
+                        <input type="checkbox" name="visto">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </ng-template>
 </div>

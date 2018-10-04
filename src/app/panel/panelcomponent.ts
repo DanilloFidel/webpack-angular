@@ -10,10 +10,9 @@ import { Tarefa } from '../tarefa.model';
 })
 export class PanelComponent implements OnInit{
 
-    public titulo: string;
-    public descricao: string;
-    public prioridade: number;
-    public tarefas: Tarefa[] = [];
+
+    public tarefas: Tarefa[] = null;
+    public tarefaId: number;
 
 
     public formulario: FormGroup = new FormGroup({
@@ -26,7 +25,7 @@ export class PanelComponent implements OnInit{
     constructor(){}
 
     ngOnInit(){
-
+       this.tarefas = this.getTarefa();
     }
 
     ngOnChanges(){
@@ -34,7 +33,11 @@ export class PanelComponent implements OnInit{
     }
 
     public cadastrarTarefa(): void {
+        if(this.tarefas === null){
+            this.tarefas = []
+        }
         let tarefa = new Tarefa(
+            this.tarefaId = Math.floor((Math.random() * 100) + 1),
             this.formulario.value.titulo,
             this.formulario.value.descricao,
             this.formulario.value.prioridade,
@@ -48,8 +51,8 @@ export class PanelComponent implements OnInit{
         localStorage.setItem("tarefa", JSON.stringify(novaTarefa))
     }
 
-    public getTarefa(): Array<object>{
+    public getTarefa(): Array<Tarefa>{
         let tarefa = localStorage.getItem("tarefa")
-         return JSON.parse(tarefa)
+        return JSON.parse(tarefa)
     }
 }
