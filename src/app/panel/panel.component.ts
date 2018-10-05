@@ -1,18 +1,23 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Http } from "@angular/http";
 
 import { Tarefa } from '../tarefa.model';
+import { TarefaService } from '../tarefa.service'
+
 
 @Component({
     selector: "app-panel",
     templateUrl: "./panel.component.html",
-    styleUrls: ["./panel.component.scss"]
+    styleUrls: ["./panel.component.scss"],
+    providers: [ TarefaService ]
 })
 export class PanelComponent implements OnInit{
 
 
     public tarefas: Tarefa[] = null;
     public tarefaId: number;
+
 
 
     public formulario: FormGroup = new FormGroup({
@@ -22,10 +27,16 @@ export class PanelComponent implements OnInit{
     })
     
 
-    constructor(){}
+    constructor(private tarefaService: TarefaService){}
 
     ngOnInit(){
-       this.tarefas = this.getTarefa();
+        this.tarefas = this.tarefaService.getTarefas()
+      /* this.tarefas = this.getTarefa();
+      this.tarefas = this.hhtp.get('localhost:3000/tarefas')
+        .toPromise()
+        .then((resposta: any)=> resposta.JSON())
+        console.log(x)
+        */
     }
 
     ngOnChanges(){
@@ -51,12 +62,12 @@ export class PanelComponent implements OnInit{
         localStorage.setItem("tarefa", JSON.stringify(novaTarefa))
     }
 
-    public getTarefa(): Array<Tarefa>{
-        let tarefa = localStorage.getItem("tarefa")
-        return JSON.parse(tarefa)
+    public getTarefas(): void{
+        
     }
 
     public deletarTarefa(id: number): void{
-        console.log(id)
+        document.getElementById(`${id}`).remove()
     }
+
 }

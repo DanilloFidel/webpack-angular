@@ -23,7 +23,7 @@
         <div class="box">
             <ul>
                 <li>
-                    <div class="tarefa" *ngFor="let tarefa of tarefas" id="{{tarefaId}}">
+                    <div class="tarefa" *ngFor="let tarefa of tarefas" [id]="tarefa.id">
                         <h4>{{tarefa.titulo}}</h4>
                         <p>{{tarefa.descricao}}</p>
                         <input type="checkbox" name="visto">

@@ -1,0 +1,10 @@
+{
+  "tarefas": [
+    {
+      "id": 1,
+      "titulo": "json-server",
+      "descricao": "typicode",
+      "prioridade": 1
+    }
+  ]
+}
