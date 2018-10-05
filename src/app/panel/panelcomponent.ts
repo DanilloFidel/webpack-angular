@@ -12,7 +12,8 @@ export class PanelComponent implements OnInit{
 
 
     public tarefas: Tarefa[] = null;
-    public tarefaId: number;
+    public id: number = 0;
+    public prioridade: string = ""
 
 
     public formulario: FormGroup = new FormGroup({
@@ -25,7 +26,7 @@ export class PanelComponent implements OnInit{
     constructor(){}
 
     ngOnInit(){
-       this.tarefas = this.getTarefa();
+
     }
 
     ngOnChanges(){
@@ -37,28 +38,30 @@ export class PanelComponent implements OnInit{
             this.tarefas = []
         }
         let tarefa = new Tarefa(
-            this.tarefaId = Math.floor((Math.random() * 100) + 1),
+            this.id++,
             this.formulario.value.titulo,
             this.formulario.value.descricao,
             this.formulario.value.prioridade,
         )
+        console.log(tarefa)
+        let p = tarefa.prioridade
+        this.definirPrioridade(p)
         this.tarefas.push(tarefa)
-        this.setTarefa(this.tarefas)
         this.formulario.reset()
     }
 
-    public setTarefa(novaTarefa: Tarefa[]): void{
-        localStorage.setItem("tarefa", JSON.stringify(novaTarefa))
-    }
-
-    public getTarefa(): Array<Tarefa>{
-        let tarefa = localStorage.getItem("tarefa")
-        return JSON.parse(tarefa)
-    }
-
     public deletarTarefa(id: any): void{
-        console.log(this.tarefas)
-        console.log(id)
-        
+        document.getElementById(`${id}`).remove()
+    }
+
+    public definirPrioridade(p: number): void{
+        console.log(p)
+        if(p == 1){
+            this.prioridade = "p1"
+        }else if(p == 2){
+            this.prioridade = "p2"
+        }else if(p == 3){
+            this.prioridade = "p3"
+        }
     }
 }
