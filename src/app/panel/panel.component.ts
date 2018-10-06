@@ -16,7 +16,8 @@ export class PanelComponent implements OnInit{
 
 
     public tarefas: Tarefa[] = null;
-    public tarefaId: number;
+    public id: number = 0;
+    public prioridade: string = ""
 
 
 
@@ -29,45 +30,38 @@ export class PanelComponent implements OnInit{
 
     constructor(private tarefaService: TarefaService){}
 
-    ngOnInit(){
-        this.tarefas = this.tarefaService.getTarefas()
-      /* this.tarefas = this.getTarefa();
-      this.tarefas = this.hhtp.get('localhost:3000/tarefas')
-        .toPromise()
-        .then((resposta: any)=> resposta.JSON())
-        console.log(x)
-        */
-    }
-
-    ngOnChanges(){
-        
-    }
+    
+    
 
     public cadastrarTarefa(): void {
         if(this.tarefas === null){
             this.tarefas = []
         }
         let tarefa = new Tarefa(
-            this.tarefaId = Math.floor((Math.random() * 100) + 1),
+            this.id++,
             this.formulario.value.titulo,
             this.formulario.value.descricao,
             this.formulario.value.prioridade,
         )
+        console.log(tarefa)
+        let p = tarefa.prioridade
         this.tarefas.push(tarefa)
-        this.setTarefa(this.tarefas)
         this.formulario.reset()
     }
 
-    public setTarefa(novaTarefa: Tarefa[]): void{
-        localStorage.setItem("tarefa", JSON.stringify(novaTarefa))
-    }
-
-    public getTarefas(): void{
-        
-    }
-
-    public deletarTarefa(id: number): void{
+    public deletarTarefa(id: any): void{
         document.getElementById(`${id}`).remove()
+    }
+
+    public definirPrioridade(p: number): void{
+        console.log(p)
+        if(p == 1){
+            this.prioridade = "p1"
+        }else if(p == 2){
+            this.prioridade = "p2"
+        }else if(p == 3){
+            this.prioridade = "p3"
+        }
     }
 
 }
