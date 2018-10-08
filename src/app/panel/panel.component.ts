@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Tarefa } from '../tarefa.model';
 import { TarefaService } from '../tarefa.service'
+import { Observable, Subject } from 'rxjs';
 
 
 @Component({
@@ -14,11 +15,9 @@ import { TarefaService } from '../tarefa.service'
 })
 export class PanelComponent implements OnInit, OnChanges{
 
-
-    public tarefas: Tarefa[];
+    //public tarefasDaLista: Tarefa[] = [];
+    public tarefas: Observable<Tarefa[]>;
     public id: number = 0;
-
-
 
     public formulario: FormGroup = new FormGroup({
         "titulo": new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
@@ -30,23 +29,14 @@ export class PanelComponent implements OnInit, OnChanges{
     constructor(private tarefaService: TarefaService){}
 
     ngOnInit(){
-        this.tarefaService.getTarefas()
-        .then(( tarefa: Tarefa[])=>{
-            this.tarefas = tarefa
-        })
-        .catch((param: any)=>{
-            console.log(param)
-        })
+        this.recuperarTarefas()
     }
 
     ngOnChanges(){
-        
+
     }
 
     public cadastrarTarefa(): void {
-        if(this.tarefas === null){
-            this.tarefas = []
-        }
         let tarefa = new Tarefa(
             this.formulario.value.titulo,
             this.formulario.value.descricao,
@@ -54,11 +44,12 @@ export class PanelComponent implements OnInit, OnChanges{
         )
         this.tarefaService.setTarefa(tarefa)
         .subscribe()
+        this.recuperarTarefas()
         this.formulario.reset()
     }
 
     public recuperarTarefas(): void{
-        
+        this.tarefas = this.tarefaService.getTarefas()
     }
 
     public deletarTarefa(id: any): void{

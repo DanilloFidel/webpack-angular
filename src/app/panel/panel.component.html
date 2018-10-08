@@ -15,10 +15,10 @@
         </form>
     </div>
     
-    <div class="box">
+    <div class="box" style="width: 60%">
         <ul>
             <li>
-                <div class="tarefa" *ngFor="let tarefa of tarefas" [id]="tarefa.id">
+                <div class="tarefa" *ngFor="let tarefa of tarefas | async" [id]="tarefa.id">
                     <h4 class="p{{tarefa.prioridade}}">{{tarefa.titulo}}</h4>
                     <p>{{tarefa.descricao}}</p>
                     <input type="checkbox" name="visto">

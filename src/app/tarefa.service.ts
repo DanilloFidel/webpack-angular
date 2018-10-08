@@ -1,21 +1,20 @@
 import { Tarefa } from "./tarefa.model";
 import { Injectable } from "@angular/core";
 import { Http, RequestOptions, Headers, Response } from "@angular/http";
-import { HttpHeaders, HttpClient} from '@angular/common/http'
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, retry } from "rxjs/operators";
 
 @Injectable()
 export class TarefaService{
 
     constructor(private http: Http,
-        private httpCliente: HttpClient){}
+        /*private httpCliente: HttpClient*/){}
 
 
-    public getTarefas(): Promise<Tarefa[]>{
+    public getTarefas(): Observable<Tarefa[]>{
          return this.http.get('http://localhost:3000/tarefas')
-        .toPromise()
-        .then((resposta: any)=> resposta.json())
+         .pipe( map((response: Response) => response.json()),retry(5))
+         
     }
 
     public setTarefa(tarefa: Tarefa): Observable<number>{
@@ -32,7 +31,7 @@ export class TarefaService{
     }
 
     public removerTarefa(id: number): Observable<any> {
-        return this.httpCliente.delete(`http://localhost:3000/tarefas/${id}`)
+        return this.http.delete(`http://localhost:3000/tarefas/${id}`)
     }
        
     
