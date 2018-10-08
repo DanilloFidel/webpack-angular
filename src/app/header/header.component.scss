@@ -1,6 +1,13 @@
 @import '../../styles/index';
 
 .container{
+    display: flex;
+    justify-content: flex-start;
     height: 80px;
     background-color: $secondary-color
+}
+
+h1{
+    color: white;
+    padding-left: 6%
 }

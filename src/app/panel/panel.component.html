@@ -5,7 +5,7 @@
             <input type="text" placeholder="Título" formControlName="titulo">
             <input type="text" placeholder="Descrição" formControlName="descricao">
             <select formControlName="prioridade">
-                <option value="0">Prioridade</option>
+                <option [ngValue]="null">Prioridade</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
