@@ -1,7 +1,7 @@
 <div class="container">
     <div class="box">
         <form [formGroup]="formulario" (ngSubmit)="cadastrarTarefa()">
-            <h5>Adicionar tarefa</h5>
+            <h3>Adicionar nova tarefa</h3>
             <input type="text" placeholder="Título" formControlName="titulo">
             <input type="text" placeholder="Descrição" formControlName="descricao">
             <select formControlName="prioridade">
@@ -14,25 +14,20 @@
             <button type="reset">Limpar</button>
         </form>
     </div>
-    <div class="box" *ngIf="tarefas === null; else lista">
-        <div>
-            <h1>Nenhuma tarefa adicionada</h1>
-        </div>
+    
+    <div class="box">
+        <ul>
+            <li>
+                <div class="tarefa" *ngFor="let tarefa of tarefas" [id]="tarefa.id">
+                    <h4 class="p{{tarefa.prioridade}}">{{tarefa.titulo}}</h4>
+                    <p>{{tarefa.descricao}}</p>
+                    <input type="checkbox" name="visto">
+                    <span (click)="deletarTarefa(tarefa.id)" class="lixeira">
+                        <i class="fas fa-trash-alt"></i>
+                    </span>
+                </div>
+            </li>
+        </ul>
     </div>
-    <ng-template  #lista>
-        <div class="box">
-            <ul>
-                <li>
-                    <div class="tarefa" *ngFor="let tarefa of tarefas" [id]="tarefa.id">
-                        <h4>{{tarefa.titulo}}</h4>
-                        <p>{{tarefa.descricao}}</p>
-                        <input type="checkbox" name="visto">
-                        <span (click)="deletarTarefa(tarefa.id)" class="lixeira">
-                            <i class="fas fa-trash-alt"></i>
-                        </span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </ng-template>
+    
 </div>

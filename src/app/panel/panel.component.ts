@@ -1,6 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnChanges} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Http } from "@angular/http";
+
 
 import { Tarefa } from '../tarefa.model';
 import { TarefaService } from '../tarefa.service'
@@ -12,12 +12,11 @@ import { TarefaService } from '../tarefa.service'
     styleUrls: ["./panel.component.scss"],
     providers: [ TarefaService ]
 })
-export class PanelComponent implements OnInit{
+export class PanelComponent implements OnInit, OnChanges{
 
 
-    public tarefas: Tarefa[] = null;
+    public tarefas: Tarefa[];
     public id: number = 0;
-    public prioridade: string = ""
 
 
 
@@ -30,38 +29,43 @@ export class PanelComponent implements OnInit{
 
     constructor(private tarefaService: TarefaService){}
 
-    
-    
+    ngOnInit(){
+        this.tarefaService.getTarefas()
+        .then(( tarefa: Tarefa[])=>{
+            this.tarefas = tarefa
+        })
+        .catch((param: any)=>{
+            console.log(param)
+        })
+    }
+
+    ngOnChanges(){
+        
+    }
 
     public cadastrarTarefa(): void {
         if(this.tarefas === null){
             this.tarefas = []
         }
         let tarefa = new Tarefa(
-            this.id++,
             this.formulario.value.titulo,
             this.formulario.value.descricao,
             this.formulario.value.prioridade,
         )
-        console.log(tarefa)
-        let p = tarefa.prioridade
-        this.tarefas.push(tarefa)
+        this.tarefaService.setTarefa(tarefa)
+        .subscribe()
         this.formulario.reset()
+    }
+
+    public recuperarTarefas(): void{
+        
     }
 
     public deletarTarefa(id: any): void{
         document.getElementById(`${id}`).remove()
+        this.tarefaService.removerTarefa(id)
+        .subscribe()
     }
 
-    public definirPrioridade(p: number): void{
-        console.log(p)
-        if(p == 1){
-            this.prioridade = "p1"
-        }else if(p == 2){
-            this.prioridade = "p2"
-        }else if(p == 3){
-            this.prioridade = "p3"
-        }
-    }
 
 }
